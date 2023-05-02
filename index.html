@@ -1,0 +1,176 @@
+<!DOCTYPE html>
+<html>
+
+<head>
+    <title>API Harry Potter </title>
+    <link rel="stylesheet" type="text/css" href="index.css">
+</head>
+
+<body>
+<div class="container">
+    <h1>API DE HARRY POTTER</h1>
+
+   <!-- <h2>Login</h2>
+    <form id="login-form">
+        <label for="username">Usuario:</label>
+        <input type="text" id="username" name="username" required>
+        <label for="password">Contraseña:</label>
+        <input type="password" id="password" name="password" required>
+        <button type="submit">Iniciar sesión</button>
+    </form>-->
+
+    <h1>Selecciona una opcion:</h1>
+    <form>
+        <input type="radio" id="peliculas" name="opcion" value="peliculas">
+        <label for="peliculas">Peliculas</label><br>
+        <input type="radio" id="personajes" name="opcion" value="personajes">
+        <label for="personajes">Personajes</label><br>
+    </form>
+    <br>
+    <button class="button" onclick="obtenerInformacion()">Mostrar informacion</button>
+
+    <div id="informacion"></div>
+
+    <h1>Inserta el IDENTIFICADOR DE 2 PERSONAJES PARA INICIAR EL COMBATE</h1>
+    <form>
+        <label for="numero1">Personaje 1:</label>
+        <input type="text" id="numero1" name="numero1"><br><br>
+        <label for="numero2">Personaje 2:</label>
+        <input type="text" id="numero2" name="numero2"><br><br>
+        <input type="button" value="Realizar combate" class="button" onclick="irAlCombate()">
+        <br>
+
+        <label for="peliculasPersonaje">Indica el id del personaje que quieras saber sus peliculas</label>
+        <input type="text" id="peliculasPersonaje" name="peliculasPersonaje"><br><br>
+        <input type="button" value="Mostrar peliculas del personaje" class="button" onclick="mostrarPeliculasPersonaje()">
+<br>
+        <label for="personajesPelicula">Indica el id de la pelicula que quieras saber sus personajes</label>
+        <input type="text" id="personajesPelicula" name="personajesPelicula"><br><br>
+        <input type="button" value="Mostrar personajes de la pelicula" class="button" onclick="mostrarPersonajesPelicula()">
+
+        <div id="informacion2"></div>
+    </form>
+    <script>
+
+        /*const loginForm = document.getElementById("login-form");
+        const contentDiv = document.getElementById("content");
+        loginForm.addEventListener("submit", async (event) => {
+            event.preventDefault();
+
+            const username = event.target.username.value;
+            const password = event.target.password.value;
+
+            try {
+                const response = await fetch('http://localhost:3033/usuarios/login', {
+                    method: "POST",
+                    headers: { "Content-Type": "application/json" },
+                    body: JSON.stringify({ username, password }),
+                });
+                const data = await response.json();
+                if (data.success) {
+                    contentDiv.style.display = "block";
+                } else {
+                    alert(data.message);
+                }
+            } catch (error) {
+                console.error("Error al iniciar sesión:", error);
+                alert("Error al iniciar sesión.");
+            }
+        });*/
+
+
+
+        function obtenerInformacion() {
+            const opcion = document.querySelector('input[name="opcion"]:checked').value;
+
+            fetch(`http://localhost:3033/${opcion}`)
+                .then(response => response.json())
+                .then(data => {
+                    let output = '<h2>Informacion</h2>';
+
+                    if (opcion === 'peliculas') {
+                        data.forEach(pelicula => {
+                            output += `
+
+                                       <li><strong>Nombre: </strong> ${pelicula.title}</li>
+                                        <li><strong>Duracion: </strong> ${pelicula.length}</li>
+                                        <li><strong>Sinopsis: </strong> ${pelicula.sinopsis}</li>
+                                        <li><strong>Fecha de estreno: </strong> ${pelicula.year}</li>
+
+                                `;
+                        });
+                    } else if (opcion === 'personajes') {
+                        data.forEach(personaje => {
+                            output += `
+
+                                       <li><strong>Nombre: </strong> ${personaje.name}</li>
+                                      <li><strong>Descripcion: </strong> ${personaje.description}</li>
+                                        <li><strong>Magia: </strong> ${personaje.magia}</li>
+                                        <li><strong>Fuerza: </strong>${personaje.fuerza}</li>
+                                       <li><strong>Vida: </strong>${personaje.vida}</li>
+                                       <li><strong>Curacion: </strong>${personaje.curacion}</li>
+
+                                `;
+                        });
+                    }
+
+                    document.getElementById('informacion').innerHTML
+                        = output;
+                })
+                .catch(error => console.error(error));
+        }
+        function irAlCombate() {
+            const numero1 = document.getElementById('numero1').value;
+            const numero2 = document.getElementById('numero2').value;
+
+            if (numero1 !== "" && numero2 !== "") {
+                window.location.href = `http://localhost:3033/combate/${numero1}/${numero2}`;
+            } else {
+                alert('Por favor, inserta el identificador de ambos personajes');
+            }
+        }
+
+        function mostrarPeliculasPersonaje() {
+            const personajeId = document.getElementById('peliculasPersonaje').value;
+            fetch(`http://localhost:3033/personajes/${personajeId}/peliculas`)
+                .then(response => response.json())
+                .then(data => {
+                    let output = '<h2>Peliculas del personaje</h2>';
+                    data.forEach(pelicula => {
+                        output += `
+          <li><strong>Titulo: </strong> ${pelicula.title}</li>
+          <li><strong>Duracion: </strong> ${pelicula.length}</li>
+          <li><strong>Sinopsis: </strong> ${pelicula.sinopsis}</li>
+          <li><strong>Fecha de estreno: </strong> ${pelicula.year}</li>
+        `;
+                    });
+                    document.getElementById('informacion2').innerHTML = output;
+                })
+                .catch(error => console.error(error));
+        }
+
+        function mostrarPersonajesPelicula() {
+            const peliculaId = document.getElementById('personajesPelicula').value;
+            fetch(`http://localhost:3033/peliculas/${peliculaId}/personajes`)
+                .then(response => response.json())
+                .then(data => {
+                    let output = '<h2>Personajes de la pelicula</h2>';
+                    data.forEach(personaje => {
+                        output += `
+          <li><strong>Nombre: </strong> ${personaje.name}</li>
+          <li><strong>Descripcion: </strong> ${personaje.description}</li>
+          <li><strong>Magia: </strong> ${personaje.magia}</li>
+          <li><strong>Fuerza: </strong> ${personaje.fuerza}</li>
+          <li><strong>Vida: </strong> ${personaje.vida}</li>
+          <li><strong>Curacion: </strong> ${personaje.curacion}</li>
+        `;
+                    });
+                    document.getElementById('informacion2').innerHTML = output;
+                })
+                .catch(error => console.error(error));
+        }
+
+    </script>
+</div>
+</body>
+</html>

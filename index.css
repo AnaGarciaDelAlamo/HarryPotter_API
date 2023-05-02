@@ -1,0 +1,95 @@
+@import url('https://fonts.googleapis.com/css2?family=Harry+Potter&display=swap');
+
+body {
+    text-align: center;
+    font-family: 'Harry Potter', cursive;
+    background-color: #3D3D3D;
+    color: #FFF;
+}
+
+.container {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    margin-top: 30px;
+}
+
+h1 {
+    color: #FFD900;
+    margin-bottom: 20px;
+}
+
+h2 {
+    color: #FFF;
+}
+
+form {
+    margin-top: 20px;
+}
+
+label {
+    font-size: 18px;
+    margin-right: 10px;
+}
+
+input[type="text"] {
+    padding: 10px;
+    font-size: 18px;
+    border-radius: 5px;
+    border: none;
+    margin-right: 10px;
+}
+
+input[type="button"] {
+    margin-top: 20px;
+    padding: 10px;
+    font-size: 18px;
+    background-color: #FFD900;
+    color: #3D3D3D;
+    border: none;
+    cursor: pointer;
+    border-radius: 5px;
+}
+
+input[type="button"]:hover {
+    background-color: #3D3D3D;
+    color: #FFD900;
+
+}
+
+#informacion {
+    background-color: #FFF;
+    color: #3D3D3D;
+    border-radius: 5px;
+    padding: 20px;
+    margin-top: 20px;
+}
+
+li {
+    margin-top: 10px;
+    font-size: 18px;
+}
+
+#peliculasPersonaje{
+    text-align: center;
+    margin-top: 20px;
+    background-color: #FFF;
+    color: #3D3D3D;
+    border-radius: 5px;
+    padding: 20px;
+}
+
+#personajesPelicula{
+    text-align: center;
+    margin-top: 20px;
+    background-color: #FFF;
+    color: #3D3D3D;
+    border-radius: 5px;
+    padding: 20px;
+}
+
+
+#button{
+    margin-top: 10px;
+    text-align: center;
+}

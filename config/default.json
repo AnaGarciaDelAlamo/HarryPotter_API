@@ -1,0 +1,12 @@
+{
+  "database": {
+    "host": "localhost",
+    "user": "root",
+    "password": "",
+    "database": "harrypotterdb"
+  },
+  "jwt": {
+    "secret": "2n7fj4RtSxHt3wJq3z7tWjK9c4N4tBdYz7QjK4mSxS3mFgH3q7",
+    "expiresIn": "1h"
+  }
+}
